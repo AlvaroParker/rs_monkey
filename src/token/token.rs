@@ -5,9 +5,15 @@ use lazy_static::lazy_static;
 
 lazy_static! {
     static ref KEYWORDS: HashMap<&'static str, TokenType> = {
-        let mut m = HashMap::new();
-        m.insert("fn", TokenType::FUNCTION);
-        m.insert("let", TokenType::LET);
+        let m = HashMap::from([
+            ("fn", TokenType::FUNCTION),
+            ("let", TokenType::LET),
+            ("true", TokenType::TRUE),
+            ("false", TokenType::FALSE),
+            ("if", TokenType::IF),
+            ("else", TokenType::ELSE),
+            ("return", TokenType::RETURN),
+        ]);
         m
     };
 }
@@ -42,6 +48,17 @@ pub enum TokenType {
     // Operators
     ASSIGN,
     PLUS,
+    MINUS,
+    BANG,
+    ASTERISK,
+    SLASH,
+
+    LT,
+    GT,
+
+    EQ,
+    #[allow(non_camel_case_types)]
+    NOT_EQ,
 
     // Delimiters
     COMMA,
@@ -55,6 +72,11 @@ pub enum TokenType {
     // Keywords
     FUNCTION,
     LET,
+    TRUE,
+    FALSE,
+    IF,
+    ELSE,
+    RETURN,
 }
 
 pub fn lookup_ident(ident: &str) -> TokenType {
